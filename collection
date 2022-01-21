@@ -1,0 +1,168 @@
+namespace zadanie_kolekcja
+{
+
+
+    class kw_list<T> : IEnumerable
+    {
+
+        int how_much = 0;
+        int wsk = 0;
+
+        T[] table;
+
+
+
+        //Constructor which make table of discribed size
+        public kw_list(int ile = 0)
+        {
+            if (ile != 0)
+            {
+                table = new T[ile];
+                how_much = ile;
+            }
+
+        }
+
+        //lenght
+
+        public int lenght
+        {
+            get { return how_much; }
+        }
+
+        //Indekser 
+
+        public T this[int val]
+        {
+
+
+            get { return table[val]; }
+            set { table[val] = value; }
+
+
+
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return table.GetEnumerator();
+        }
+
+        public void sort_int_asc()
+        {
+            if (Type.Equals(table.GetType(), typeof(int[])))
+            {
+                int[] tab = (int[])table.Clone();
+
+                for (int i = how_much; i > 0; i--)
+                {
+                    for (int j = 0; j < i - 1; j++)
+                    {
+                        if (tab[j + 1] < tab[j])
+                        {
+                            int temp = tab[j + 1];
+                            tab[j + 1] = tab[j];
+                            tab[j] = temp;
+                        }
+                    }
+                }
+                table = (T[])tab.Clone();
+            }
+
+
+        }
+
+        public void sort_double_asc()
+        {
+            if (Type.Equals(table.GetType(), typeof(double[])))
+            {
+                double[] tab = (double[])table.Clone();
+
+                for (int i = how_much; i > 0; i--)
+                {
+                    for (int j = 0; j < i - 1; j++)
+                    {
+                        if (tab[j + 1] < tab[j])
+                        {
+                            double temp = tab[j + 1];
+                            tab[j + 1] = tab[j];
+                            tab[j] = temp;
+                        }
+                    }
+                }
+                table = (T[])tab.Clone();
+            }
+
+        }
+
+        public void Add(T valuee)
+        {
+            if (how_much != 0 && wsk==0) { table = null; how_much = 0;  }
+            if (table != null)
+            {
+                int i=0, wsk_1 = wsk;
+                T[] copy= (T[])table.Clone();
+                table = new T[++wsk_1];
+
+                foreach (var item in copy)
+                {
+                    table[i] = item;
+                    i++;
+                }
+                table[--wsk_1]= valuee;
+
+            }
+            else
+            {
+                table = new T[1];
+                table[0] = valuee;
+            }
+            wsk++;
+            how_much = wsk;
+
+
+        }
+
+        //set value 
+        public void set(T variable, int indek)
+        {
+            table.SetValue(variable, indek);
+        }
+
+        //check the same
+        public static bool operator ==(kw_list<T> zm, kw_list<T> zm_1)
+        {
+            bool logic = true;
+            if ((zm.lenght == zm_1.lenght))
+            {
+                int i = 0;
+
+                foreach (var item in zm)
+                {
+                    if (item.ToString() == zm_1[i].ToString()) ;
+
+                    else
+                    {
+                        logic = false;
+                        break;
+                    }
+                    i++;
+
+                }
+
+            }
+
+            return logic;
+        }
+
+        public static bool operator !=(kw_list<T> zm, kw_list<T> zm_1)
+        {
+
+            return false;
+        }
+
+
+
+
+
+    }
